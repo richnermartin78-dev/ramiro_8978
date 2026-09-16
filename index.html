@@ -186,7 +186,7 @@
         <div class="actions">
           <a class="btn primary" href="https://open.spotify.com/artist/01i84ynmRz6t3EESA7n4TZ" target="_blank" rel="noopener">Spotify</a>
           <a class="btn" href="https://www.youtube.com/@ramiro_8978" target="_blank" rel="noopener">YouTube</a>
-          <a class="btn" href="https://www.instagram.com/ramiro_8978/">Instagram</a>
+          <a class="btn" href="https://www.instagram.com/ramiro_8978/" onclick="return openInstagram(event)">Instagram</a>
         </div>
       </div>
     </div>
@@ -270,7 +270,7 @@
         <div class="contact-row"><div class="contact-key">Email</div><div class="contact-value"><a href="mailto:ramiro8978music@gmail.com">ramiro8978music@gmail.com</a></div></div>
         <div class="contact-row"><div class="contact-key">Spotify</div><div class="contact-value"><a href="https://open.spotify.com/artist/01i84ynmRz6t3EESA7n4TZ" target="_blank" rel="noopener">Official Spotify artist profile</a></div></div>
         <div class="contact-row"><div class="contact-key">YouTube</div><div class="contact-value"><a href="https://www.youtube.com/@ramiro_8978" target="_blank" rel="noopener">@ramiro_8978</a></div></div>
-        <div class="contact-row"><div class="contact-key">Instagram</div><div class="contact-value"><a href="https://www.instagram.com/ramiro_8978/">@ramiro_8978</a></div></div>
+        <div class="contact-row"><div class="contact-key">Instagram</div><div class="contact-value"><a href="https://www.instagram.com/ramiro_8978/" onclick="return openInstagram(event)">@ramiro_8978</a></div></div>
       </div>
     </div>
   </section>
@@ -282,6 +282,28 @@
     <span>MUSIC | ART | SOUL</span>
   </div>
 </footer>
+
+
+<script>
+  function openInstagram(event){
+    const webUrl = "https://www.instagram.com/ramiro_8978/";
+    const isAndroid = /Android/i.test(navigator.userAgent);
+
+    if (isAndroid) {
+      event.preventDefault();
+      const fallback = encodeURIComponent(webUrl);
+      window.location.href =
+        "intent://instagram.com/_u/ramiro_8978/#Intent;" +
+        "scheme=https;" +
+        "package=com.instagram.android;" +
+        "S.browser_fallback_url=" + fallback + ";" +
+        "end";
+      return false;
+    }
+
+    return true;
+  }
+</script>
 
 <script>
   // Release moment: midnight in Switzerland, night of 16 → 17 September 2026.
