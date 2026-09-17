@@ -400,15 +400,14 @@
     }
 
     .preview-audio{
-      display:none;
+      display:block;
       width:100%;
       max-width:620px;
       height:44px;
       accent-color:var(--gold2);
     }
 
-    .preview-card.ready .preview-audio{display:block}
-    .preview-card.ready .preview-state{display:none}
+    .preview-state{display:none !important}
 
     .preview-state{
       display:inline-flex;
@@ -1036,7 +1035,7 @@
               id="previewAudio01"
               class="preview-audio"
               controls
-              preload="metadata"
+              preload="none"
               controlsList="nodownload"
               oncontextmenu="return false"
             >
@@ -1053,7 +1052,7 @@
             <small>Pre-release sample · Upcoming release</small>
             <h3>QUESTIONS IN THE DARK</h3>
             <p>30-second exclusive preview.</p>
-            <audio id="previewAudio02" class="preview-audio" controls preload="metadata" controlsList="nodownload" oncontextmenu="return false">
+            <audio id="previewAudio02" class="preview-audio" controls preload="none" controlsList="nodownload" oncontextmenu="return false">
               <source src="audio/previews/preview-02.mp3" type="audio/mpeg">
             </audio>
             <div class="preview-state">Preview coming soon</div>
@@ -1066,7 +1065,7 @@
             <small>Pre-release sample · Upcoming release</small>
             <h3>WHAT YOU AWAKENED IN ME</h3>
             <p>30-second exclusive preview.</p>
-            <audio id="previewAudio03" class="preview-audio" controls preload="metadata" controlsList="nodownload" oncontextmenu="return false">
+            <audio id="previewAudio03" class="preview-audio" controls preload="none" controlsList="nodownload" oncontextmenu="return false">
               <source src="audio/previews/preview-03.mp3" type="audio/mpeg">
             </audio>
             <div class="preview-state">Preview coming soon</div>
@@ -1079,7 +1078,7 @@
             <small>Pre-release sample · Upcoming release</small>
             <h3>PAPER UMBRELLA</h3>
             <p>Afrobeat Celebration Mix · 30-second exclusive preview.</p>
-            <audio id="previewAudio04" class="preview-audio" controls preload="metadata" controlsList="nodownload" oncontextmenu="return false">
+            <audio id="previewAudio04" class="preview-audio" controls preload="none" controlsList="nodownload" oncontextmenu="return false">
               <source src="audio/previews/preview-04.mp3" type="audio/mpeg">
             </audio>
             <div class="preview-state">Preview coming soon</div>
@@ -1404,27 +1403,14 @@
       if(galleryImg && galleryImg.src) previewImg.src = galleryImg.src;
     });
 
-    const cards = document.querySelectorAll(".preview-card");
-    const audios = [];
+    const audios = Array.from(document.querySelectorAll(".preview-audio"));
 
-    cards.forEach(card => {
-      const audio = card.querySelector(".preview-audio");
-      if(!audio) return;
-      audios.push(audio);
-
-      const setReady = () => card.classList.add("ready");
-      const setWaiting = () => card.classList.remove("ready");
-
-      audio.addEventListener("loadedmetadata", setReady);
-      audio.addEventListener("canplay", setReady);
-      audio.addEventListener("error", setWaiting);
+    audios.forEach(audio => {
       audio.addEventListener("play", () => {
         audios.forEach(other => {
           if(other !== audio && !other.paused) other.pause();
         });
       });
-
-      if(audio.readyState >= 1) setReady();
     });
   })();
 
