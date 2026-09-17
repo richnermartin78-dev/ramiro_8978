@@ -349,6 +349,104 @@
       font-weight:750;
     }
 
+
+    /* PRE-RELEASE AUDIO PREVIEW */
+    .preview-zone{
+      margin-top:42px;
+      padding-top:34px;
+      border-top:1px solid rgba(255,255,255,.07);
+    }
+
+    .preview-card{
+      display:grid;
+      grid-template-columns:120px minmax(0,1fr);
+      gap:24px;
+      align-items:center;
+      margin-top:18px;
+      padding:25px;
+      border:1px solid var(--line);
+      background:
+        radial-gradient(circle at 12% 20%,rgba(211,170,80,.08),transparent 18rem),
+        linear-gradient(135deg,rgba(211,170,80,.05),rgba(255,255,255,.012));
+    }
+
+    .preview-badge{
+      aspect-ratio:1;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--line);
+      background:#080808;
+      color:var(--gold3);
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:1.65rem;
+      text-align:center;
+      line-height:1.05;
+      padding:10px;
+    }
+
+    .preview-copy small{
+      color:var(--gold2);
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-weight:750;
+    }
+
+    .preview-copy h3{
+      margin:7px 0 7px;
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:clamp(1.35rem,3vw,2rem);
+    }
+
+    .preview-copy p{
+      margin:0 0 15px;
+      color:#aaa398;
+      font-size:.92rem;
+    }
+
+    .preview-audio{
+      display:none;
+      width:100%;
+      max-width:620px;
+      height:44px;
+      accent-color:var(--gold2);
+    }
+
+    .preview-card.ready .preview-audio{display:block}
+    .preview-card.ready .preview-state{display:none}
+
+    .preview-state{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      min-height:40px;
+      padding:0 13px;
+      border:1px solid rgba(211,170,80,.38);
+      color:#c9c2b6;
+      font-size:.76rem;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+
+    .preview-state::before{
+      content:"";
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--gold2);
+      box-shadow:0 0 12px rgba(211,170,80,.55);
+    }
+
+    @media(max-width:620px){
+      .preview-card{
+        grid-template-columns:1fr;
+        padding:20px;
+      }
+
+      .preview-badge{
+        width:96px;
+      }
+    }
+
     /* ART */
     .art-head{
       display:flex;
@@ -922,6 +1020,36 @@
           </div>
         </article>
       </div>
+
+      <div class="preview-zone">
+        <div class="section-label">Pre-release</div>
+        <h2 style="font-size:clamp(1.8rem,4vw,3rem);margin-bottom:8px;">Exclusive preview.</h2>
+        <p class="lead" style="margin-top:0;">
+          Short previews of upcoming ramiro_8978 releases — before they go live on streaming platforms.
+        </p>
+
+        <article id="previewCard01" class="preview-card">
+          <div class="preview-badge">PRE<br>01</div>
+          <div class="preview-copy">
+            <small>Pre-release sample</small>
+            <h3>NEXT RELEASE</h3>
+            <p>A short first listen before the official release.</p>
+
+            <audio
+              id="previewAudio01"
+              class="preview-audio"
+              controls
+              preload="metadata"
+              controlsList="nodownload"
+              oncontextmenu="return false"
+            >
+              <source src="audio/previews/preview-01.mp3" type="audio/mpeg">
+            </audio>
+
+            <div id="previewState01" class="preview-state">Preview coming soon</div>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -1227,6 +1355,23 @@
 
   updateReleaseState();
   setInterval(updateReleaseState, 1000);
+
+
+  /* PRE-RELEASE AUDIO */
+  (function(){
+    const audio = document.getElementById("previewAudio01");
+    const card = document.getElementById("previewCard01");
+    if(!audio || !card) return;
+
+    const setReady = () => card.classList.add("ready");
+    const setWaiting = () => card.classList.remove("ready");
+
+    audio.addEventListener("loadedmetadata", setReady);
+    audio.addEventListener("canplay", setReady);
+    audio.addEventListener("error", setWaiting);
+
+    if(audio.readyState >= 1) setReady();
+  })();
 
   /* GALLERY FILTERS */
   const filterButtons = document.querySelectorAll(".filter-btn");
