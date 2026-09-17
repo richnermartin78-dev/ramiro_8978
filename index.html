@@ -1021,7 +1021,7 @@
         </article>
       </div>
 
-      <div class="preview-zone">
+      <div id="previewZone" class="preview-zone">
         <div class="section-label">Pre-release</div>
         <h2 style="font-size:clamp(1.8rem,4vw,3rem);margin-bottom:8px;">Exclusive preview.</h2>
         <p class="lead" style="margin-top:0;">
@@ -1031,9 +1031,9 @@
         <article id="previewCard01" class="preview-card">
           <div class="preview-badge">PRE<br>01</div>
           <div class="preview-copy">
-            <small>Pre-release sample</small>
-            <h3>NEXT RELEASE</h3>
-            <p>A short first listen before the official release.</p>
+            <small>Pre-release sample · Out 18 September 2026</small>
+            <h3>WARUM LÜGST DU MICH AN?</h3>
+            <p>30-second exclusive preview before the official release at midnight.</p>
 
             <audio
               id="previewAudio01"
@@ -1337,6 +1337,8 @@
       headline.textContent = "Out now.";
       countdown.textContent = "THE FIRST TWO RELEASES ARE LIVE";
       status.textContent = "OUT NOW";
+      const previewZone = document.getElementById("previewZone");
+      if(previewZone) previewZone.style.display = "none";
       return;
     }
 
